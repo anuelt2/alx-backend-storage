@@ -5,7 +5,7 @@ from pymongo import MongoClient
 
 
 if __name__ == "__main__":
-    client = MongoClient("mongodb://localhost:27017")
+    client = MongoClient()
     collection = client.logs.nginx
 
     num_logs = collection.count_documents({})
@@ -13,15 +13,15 @@ if __name__ == "__main__":
 
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 
-    print("Methods")
+    print("Methods:")
     for method in methods:
         count = collection.count_documents({"method": method})
         print(f"\tmethod {method}: {count}")
 
-    status_check = collection.count_documents(
+    count_get_with_status = collection.count_documents(
             {
                 "method": "GET",
                 "path": "/status"
                 }
             )
-    print(f"{status_check} status check")
+    print(f"{count_get_with_status} status check")
